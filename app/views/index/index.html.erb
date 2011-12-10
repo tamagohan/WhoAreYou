@@ -1,0 +1,20 @@
+<h1>Index#index</h1>
+<% if flash[:notice] %>
+  <div id="notice"><%= flash[:notice] %></div>
+<% end %>
+
+<% unless session[:oauth] %>
+  <% form_tag :action => 'oauth' do |f| %>
+     <%= submit_tag '認証する' %>
+  <% end %>
+<% else %>
+  <div id="friends_timeline">
+    <dl>
+      <% for f in @friends_timelines do %>
+      <dt><%= image_tag f.user.profile_image_url, {:width => 40, :height => 40} %></dt>
+        <dd><%= f.user.name %></dd>
+        <dd><%= f.text %></dd>
+      <% end %>
+    </dl>
+  </div>
+<% end %>
