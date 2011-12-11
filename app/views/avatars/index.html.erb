@@ -1,0 +1,31 @@
+<h1>Listing avatars</h1>
+
+<table>
+  <tr>
+    <th>Avatar tweet</th>
+    <th>Name</th>
+    <th>Parent</th>
+    <th>Birthday</th>
+    <th>Sex</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @avatars.each do |avatar| %>
+  <tr>
+    <td><%= avatar.avatar_tweet_id %></td>
+    <td><%= avatar.name %></td>
+    <td><%= avatar.account.login %></td>
+    <td><%= avatar.birthday %></td>
+    <td><%= avatar.sex %></td>
+    <td><%= link_to 'Show', avatar %></td>
+    <td><%= link_to 'Edit', edit_avatar_path(avatar) %></td>
+    <td><%= link_to 'Destroy', avatar, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Avatar', new_avatar_path %>

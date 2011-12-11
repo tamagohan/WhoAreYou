@@ -7,6 +7,13 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+<% if current_account %>
+  <Div Align="left">
+    <%= link_to 'My Page', account_path(current_account) %> |
+    <%= link_to 'logout', account_session_path, :method => :delete %>
+  </Div>
+<% end %>
+<h1>Who Are You</h1>
 
 <%= yield %>
 

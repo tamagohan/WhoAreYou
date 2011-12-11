@@ -1,0 +1,37 @@
+<%= form_for(@twitter) do |f| %>
+  <% if @twitter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@twitter.errors.count, "error") %> prohibited this twitter from being saved:</h2>
+
+      <ul>
+      <% @twitter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :account_id %><br />
+    <%= f.text_field :account_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tweet_id %><br />
+    <%= f.text_field :tweet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :oauth_token %><br />
+    <%= f.text_field :oauth_token %>
+  </div>
+  <div class="field">
+    <%= f.label :oauth_verifier %><br />
+    <%= f.text_field :oauth_verifier %>
+  </div>
+  <div class="field">
+    <%= f.label :last_tw_id %><br />
+    <%= f.text_field :last_tw_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

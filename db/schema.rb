@@ -10,12 +10,68 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111210072807) do
+ActiveRecord::Schema.define(:version => 20111211073457) do
 
   create_table "accounts", :force => true do |t|
+    t.string   "login"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.integer  "login_count"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "role"
+  end
+
+  create_table "avatar_tweets", :force => true do |t|
+    t.integer  "avatar_twitter_id"
+    t.integer  "tw_av_id"
+    t.string   "tw_av_str"
+    t.integer  "tw_av_type"
+    t.string   "tw_av_image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "avatar_twitters", :force => true do |t|
+    t.integer  "avatar_id"
+    t.string   "auth_id"
+    t.string   "auth_password"
+    t.string   "twitter_name"
+    t.integer  "last_cp_tw_id", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "avatars", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "avatar_tweet_id"
     t.string   "name"
-    t.integer  "you_id"
+    t.datetime "birthday"
+    t.integer  "sex"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tweets", :force => true do |t|
+    t.integer  "twitter_id"
+    t.integer  "tw_id"
+    t.string   "tw_str"
+    t.integer  "tw_type"
+    t.string   "tw_image_url"
+    t.datetime "tw_created_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "twitters", :force => true do |t|
+    t.integer  "account_id"
     t.integer  "tweet_id"
+    t.string   "oauth_token"
+    t.string   "oauth_verifier"
+    t.integer  "last_tw_id",     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

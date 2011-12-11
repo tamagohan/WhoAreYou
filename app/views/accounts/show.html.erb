@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h2><%=h @account.login %>さんのページ</h2>
+
+<p>
+  あなたは<%=h @account.login_count -%>回目のログインです。<br>
+  <% if @account.login_count and @account.login_count > 1 -%>
+  前回は<%=h @account.last_login_at -%>にログインしました。
+  <% end -%>
+</p>
+
+
+<% if @account.avatar.nil? %>
+   <%= link_to 'アバターを作成する', new_avatar_path %> <br> 
+<% else %>
+   <%= link_to 'アバターを観察する', avatar_path(@account.avatar) %> <br> 
+<% end %>
+
+<%= link_to 'Edit', edit_account_path(@account) %>
+<%= link_to 'index', accounts_path if current_account.is_administrator%> 

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+</br>
+<h3> アバター情報 </h3>
+<p>
+  <b>Name:</b>
+  <%= @avatar.name %>
+</p>
+
+<p>
+  <b>Birthday:</b>
+  <%= @avatar.birthday %>
+</p>
+
+<p>
+  <b>Age:</b>
+    生後<%= @age %>日
+</p>
+
+<p>
+  <b>Sex:</b>
+  <%= @avatar.sex == 0 ? '♂' : '♀' %>
+</p>
+
+
+<%= link_to 'Edit', edit_avatar_path(@avatar) %> 
+<%= link_to_function 'Back', 'history.back()' %>

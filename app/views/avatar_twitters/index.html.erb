@@ -1,0 +1,31 @@
+<h1>Listing avatar_twitters</h1>
+
+<table>
+  <tr>
+    <th>Avatar</th>
+    <th>Auth</th>
+    <th>Auth password</th>
+    <th>Twitter name</th>
+    <th>Last cp tw</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @avatar_twitters.each do |avatar_twitter| %>
+  <tr>
+    <td><%= avatar_twitter.avatar_id %></td>
+    <td><%= avatar_twitter.auth_id %></td>
+    <td><%= avatar_twitter.auth_password %></td>
+    <td><%= avatar_twitter.twitter_name %></td>
+    <td><%= avatar_twitter.last_cp_tw_id %></td>
+    <td><%= link_to 'Show', avatar_twitter %></td>
+    <td><%= link_to 'Edit', edit_avatar_twitter_path(avatar_twitter) %></td>
+    <td><%= link_to 'Destroy', avatar_twitter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Avatar twitter', new_avatar_twitter_path %>

@@ -1,0 +1,31 @@
+<h1>Listing accounts</h1>
+
+<table>
+  <tr>
+    <th>Login</th>
+    <th>Login count</th>
+    <th>Current login at</th>
+    <th>Last login at</th>
+    <th>Avatar</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @accounts.each do |account| %>
+  <tr>
+    <td><%= account.login %></td>
+    <td><%= account.login_count %></td>
+    <td><%= account.current_login_at %></td>
+    <td><%= account.last_login_at %></td>
+    <td><%= account.avatar.name if account.avatar %></td>
+    <td><%= link_to 'Show', account %></td>
+    <td><%= link_to 'Edit', edit_account_path(account) %></td>
+    <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Account', new_account_path %>

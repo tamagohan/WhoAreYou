@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Avatar twitter:</b>
+  <%= @avatar_tweet.avatar_twitter_id %>
+</p>
+
+<p>
+  <b>Tw av:</b>
+  <%= @avatar_tweet.tw_av_id %>
+</p>
+
+<p>
+  <b>Tw av str:</b>
+  <%= @avatar_tweet.tw_av_str %>
+</p>
+
+<p>
+  <b>Tw av type:</b>
+  <%= @avatar_tweet.tw_av_type %>
+</p>
+
+<p>
+  <b>Tw av image url:</b>
+  <%= @avatar_tweet.tw_av_image_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_avatar_tweet_path(@avatar_tweet) %> |
+<%= link_to 'Back', avatar_tweets_path %>

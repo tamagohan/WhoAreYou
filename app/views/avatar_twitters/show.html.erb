@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= @avatar_twitter.avatar.name %>のつぶやき</b>
+</p>
+
+<div id="timeline">
+  <dl>
+    <% for tweet in @tweets do %>
+    <dt><%= image_tag tweet.tw_av_image_url, {:width => 40, :height => 40} %></dt>
+      <dd><%= @avatar_twitter.avatar.name %></dd>
+      <dd><%= tweet.tw_av_str %></dd>
+    <% end %>
+  </dl>
+</div>
+
+<%= link_to 'Edit', edit_avatar_twitter_path(@avatar_twitter) %> |
+<%= link_to 'Back', avatar_twitters_path %>

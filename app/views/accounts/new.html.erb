@@ -1,0 +1,11 @@
+<h1>New account</h1>
+
+<%= link_to 'Back', accounts_path %>
+
+<% form_for(@account, :url=>accounts_path) do |f| %>
+<!--  <%= f.error_messages %> -->
+  <%= render :partial => "form", :locals=>{:f=>f} %>
+  <p>
+<!--    <%= f.submit '作成' %> -->
+  </p>
+<% end %>

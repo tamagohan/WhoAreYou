@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @twitter.account_id %>
+</p>
+
+<p>
+  <b>Tweet:</b>
+  <%= @twitter.tweet_id %>
+</p>
+
+  <div id="timeline">
+    <dl>
+      <% for tweet in @twitter.tweets do %>
+      <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} %></dt>
+        <dd><%= tweet.tw_id %></dd>
+        <dd><%= tweet.tw_str %></dd>
+      <% end %>
+    </dl>
+  </div>
+
+<p>
+  <b>Last tw:</b>
+  <%= @twitter.last_tw_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_twitter_path(@twitter) %> |
+<%= link_to 'Back', twitters_path %>

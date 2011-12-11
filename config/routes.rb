@@ -1,16 +1,36 @@
 WhoAreYou::Application.routes.draw do
+  resources :avatar_tweets
+
+  resources :avatar_twitters
+
+  resources :tweets
+
+  resources :twitters
+
+  resources :avatars
+
   get "index/index"
-
-  get "index/oauth"
-
+  post "index/oauth"
   get "index/callback"
 
+=begin
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'index'
   map.connect ':action', :controller => 'index'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
+=end
+  resources :index
+  resource :account_session, :only=>[:new, :create, :destroy]
+  resources :accounts do
+    collection do
+      get 'test'
+      get 'result'
+      get 'select'
+      post 'select'
+    end
+   end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

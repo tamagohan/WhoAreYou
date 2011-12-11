@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  avatar_id: 1
+  auth_id: MyString
+  auth_password: MyString
+  twitter_name: MyString
+  last_cp_tw_id: 1
+
+two:
+  avatar_id: 1
+  auth_id: MyString
+  auth_password: MyString
+  twitter_name: MyString
+  last_cp_tw_id: 1

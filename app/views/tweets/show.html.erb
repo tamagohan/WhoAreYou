@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Twitter:</b>
+  <%= @tweet.twitter_id %>
+</p>
+
+<p>
+  <b>Tw:</b>
+  <%= @tweet.tw_id %>
+</p>
+
+<p>
+  <b>Tw str:</b>
+  <%= @tweet.tw_str %>
+</p>
+
+<p>
+  <b>Tw type:</b>
+  <%= @tweet.tw_type %>
+</p>
+
+<p>
+  <b>Tw created at:</b>
+  <%= @tweet.tw_created_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
+<%= link_to 'Back', tweets_path %>
