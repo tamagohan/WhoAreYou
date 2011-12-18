@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   login: MyString
   crypted_password: MyString
   password_salt: MyString
@@ -8,10 +9,9 @@ one:
   login_count: 1
   current_login_at: 2011-12-10 19:23:26
   last_login_at: 2011-12-10 19:23:26
-  avatar_id: 1
-  tweet_id: 1
 
 two:
+  id: 2
   login: MyString
   crypted_password: MyString
   password_salt: MyString
@@ -19,5 +19,21 @@ two:
   login_count: 1
   current_login_at: 2011-12-10 19:23:26
   last_login_at: 2011-12-10 19:23:26
-  avatar_id: 1
-  tweet_id: 1
+
+admin:
+  id: 3
+  login: admin
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  login_count: 1
+  role: 0
+
+general:
+  id: 4
+  login: general
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  login_count: 1
+  role: 1

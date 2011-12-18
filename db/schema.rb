@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111211073457) do
+ActiveRecord::Schema.define(:version => 20111218025338) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -51,6 +51,29 @@ ActiveRecord::Schema.define(:version => 20111211073457) do
     t.string   "name"
     t.datetime "birthday"
     t.integer  "sex"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "image_url"
+  end
+
+  create_table "avatars_items", :id => false, :force => true do |t|
+    t.integer "avatar_id"
+    t.integer "item_id"
+  end
+
+  create_table "growth_logs", :force => true do |t|
+    t.integer  "avatar_id"
+    t.integer  "growth_type"
+    t.boolean  "is_informed", :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.integer  "item_type"
+    t.text     "description"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

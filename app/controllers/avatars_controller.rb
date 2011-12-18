@@ -54,10 +54,11 @@ class AvatarsController < ApplicationController
     end
     @avatar = Avatar.new(params[:avatar])
     @avatar.birthday = Time.now.utc
+    @avatar.image_url = "/images/pityu.jpg"
 
     respond_to do |format|
       if @avatar.save
-        format.html { redirect_to(@avatar, :notice => 'Avatar was successfully created.') }
+        format.html { redirect_to(@avatar, :notice => 'アバターが誕生しました！') }
         format.xml  { render :xml => @avatar, :status => :created, :location => @avatar }
       else
         format.html { render :action => "new" }

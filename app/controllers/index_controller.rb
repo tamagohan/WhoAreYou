@@ -27,18 +27,18 @@ class IndexController < ApplicationController
           twt.save
           current_twitter.last_tw_id = tweet.id.to_i
           current_twitter.save
-          unless current_account.avatar.avatar_twitter.nil?
-            tweet.id.to_i > current_av_twitter.last_cp_tw_id
-            av_twt = AvatarTweet.new
-            av_twt.avatar_twitter = current_account.avatar.avatar_twitter
-            av_twt.tw_av_str = tweet.text
-            av_twt.tw_av_image_url = image_url
-            av_twt.save
-            current_av_twitter.last_cp_tw_id = tweet.id.to_i
-          end
+#           unless current_account.avatar.avatar_twitter.nil?
+#             tweet.id.to_i > current_av_twitter.last_cp_tw_id
+#             av_twt = AvatarTweet.new
+#             av_twt.avatar_twitter = current_account.avatar.avatar_twitter
+#             av_twt.tw_av_str = tweet.text
+#             av_twt.tw_av_image_url = image_url
+#             av_twt.save
+#             current_av_twitter.last_cp_tw_id = tweet.id.to_i
+#           end
         end
       end
-      current_av_twitter.save
+#      current_av_twitter.save
     end
   end
 

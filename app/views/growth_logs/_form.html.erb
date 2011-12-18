@@ -1,0 +1,29 @@
+<%= form_for(@growth_log) do |f| %>
+  <% if @growth_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@growth_log.errors.count, "error") %> prohibited this growth_log from being saved:</h2>
+
+      <ul>
+      <% @growth_log.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :avatar_id %><br />
+    <%= f.text_field :avatar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :growth_type %><br />
+    <%= f.text_field :growth_type %>
+  </div>
+  <div class="field">
+    <%= f.label :is_informed %><br />
+    <%= f.check_box :is_informed %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

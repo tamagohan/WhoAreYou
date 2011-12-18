@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @item.name %>
+</p>
+
+<p>
+  <%= raw @item.description %>
+</p>
+
+<img src=<%= @item.image %> >
+</br>
+
+<%= link_to_function 'Back', 'history.back()' %>

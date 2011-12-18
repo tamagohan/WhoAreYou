@@ -1,18 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b><%= @avatar_twitter.avatar.name %>のつぶやき</b>
+  <b><%= @avatar.name %>のつぶやき</b>
 </p>
 
 <div id="timeline">
   <dl>
     <% for tweet in @tweets do %>
-    <dt><%= image_tag tweet.tw_av_image_url, {:width => 40, :height => 40} %></dt>
-      <dd><%= @avatar_twitter.avatar.name %></dd>
-      <dd><%= tweet.tw_av_str %></dd>
+      <div id="tweet">
+	<div id="tw_image">
+          <dt><%= image_tag @avatar.image_url, {:width => 40, :height => 40} %></dt>
+	</div>
+	<div id="tw_str">
+          <dd><%= @avatar.name %></dd>
+          <dd><%= tweet.tw_av_str %></dd>
+	</div>
+      </div>
     <% end %>
   </dl>
 </div>
 
-<%= link_to 'Edit', edit_avatar_twitter_path(@avatar_twitter) %> |
-<%= link_to 'Back', avatar_twitters_path %>
+<%= link_to 'アバターのページに戻る', avatar_path(@avatar) %>

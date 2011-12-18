@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
+<% unless @msg.nil? %>
+  <% @msg.each do |str| %>
+    <font size="2" color="#00cc99"><%= str  %></font></br>
+  <% end %>
+<% end %>
 
 </br>
 <h3> アバター情報 </h3>
@@ -22,6 +27,32 @@
   <%= @avatar.sex == 0 ? '♂' : '♀' %>
 </p>
 
+<p>
+  <b>Item</b>
+  <% @avatar.items.each do |item| %>
+    <%= link_to item.name, :controller => 'items', :action => 'show', :id => item.id %>
+    <% if @is_new_icon %>
+      <img src="/images/new.jpg">
+    <% end %>
+  <% end %>
+</p>
 
+
+  <%= form_tag :controller => 'twitters', :action => 'get_tweets' do |f| %>
+     <%= submit_tag 'アバターにtwitter情報をダウンロードする' %>
+  <% end %>
+<% unless @avatar.avatar_twitter.nil? %>
+
+  <%= link_to 'アバターのつぶやきをみる', 
+      :controller => 'avatar_twitters', :action => 'show', 
+  :id => @avatar.avatar_twitter.id %> 
+  <% if @is_new_icon %>
+    <img src="/images/new.jpg">
+  <% end %>
+<% end %>
+</br>
+<%= image_tag (@avatar.image_url) %></br>
+</br>
+</br>
 <%= link_to 'Edit', edit_avatar_path(@avatar) %> 
 <%= link_to_function 'Back', 'history.back()' %>

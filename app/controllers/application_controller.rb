@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)
@@ -27,17 +27,7 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
-  def require_account
-    if current_account.nil?
-      store_location
-      flash[:notice] = 'ログインしてください。'
-      redirect_to new_account_session_url
-      return false
-    elsif !current_account.is_administrator and Account.find(params[:id]) != current_account
-      redirect_to current_account
-      return false
-    end
-  end
+
 
   def require_admin
     if current_account.nil?

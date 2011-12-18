@@ -1,0 +1,27 @@
+<h1>Listing growth_logs</h1>
+
+<table>
+  <tr>
+    <th>Avatar</th>
+    <th>Growth type</th>
+    <th>Is informed</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @growth_logs.each do |growth_log| %>
+  <tr>
+    <td><%= growth_log.avatar_id %></td>
+    <td><%= growth_log.growth_type %></td>
+    <td><%= growth_log.is_informed %></td>
+    <td><%= link_to 'Show', growth_log %></td>
+    <td><%= link_to 'Edit', edit_growth_log_path(growth_log) %></td>
+    <td><%= link_to 'Destroy', growth_log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Growth log', new_growth_log_path %>

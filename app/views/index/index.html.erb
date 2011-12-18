@@ -4,8 +4,8 @@
 <% end %>
 
 <% unless session[:oauth] %>
-  <% form_tag :action => 'oauth' do |f| %>
-     <%= submit_tag '認証する' %>
+  <%= form_tag :action => 'oauth' do |f| %>
+     <%= submit_tag 'アバターにtwitter情報をダウンロードする' %>
   <% end %>
 <% else %>
   <div id="friends_timeline">

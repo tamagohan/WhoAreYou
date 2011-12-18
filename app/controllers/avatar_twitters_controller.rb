@@ -14,6 +14,7 @@ class AvatarTwittersController < ApplicationController
   # GET /avatar_twitters/1.xml
   def show
     @avatar_twitter = AvatarTwitter.find(params[:id])
+    @avatar = @avatar_twitter.avatar
     @tweets = @avatar_twitter.avatar_tweets.sort_by{|tw| -tw.id}
 
     respond_to do |format|

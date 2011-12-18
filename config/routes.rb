@@ -1,10 +1,18 @@
 WhoAreYou::Application.routes.draw do
+  resources :items
+
+  resources :growth_logs
+
   resources :avatar_tweets
 
   resources :avatar_twitters
 
   resources :tweets
 
+  get "twitters/oauth"
+  get "twitters/callback"
+  post "twitters/get_tweets"
+  get "twitters/get_tweets"
   resources :twitters
 
   resources :avatars

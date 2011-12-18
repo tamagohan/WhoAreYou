@@ -53,8 +53,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-#        format.html { redirect_back_or_default accounts_url }
-        format.html { redirect_to(@account, :notice => 'Account was successfully created.') }
+        format.html { redirect_to(new_account_session_path, :notice => 'アカウントの作成に成功しました。下記フォームからログインして下さい。') }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
         format.html { render :action => "new" }
@@ -101,6 +100,7 @@ class AccountsController < ApplicationController
       redirect_to new_account_session_url
       return false
     elsif !current_account.is_administrator and Account.find(params[:id]) != current_account
+
       redirect_to current_account
       return false
     end

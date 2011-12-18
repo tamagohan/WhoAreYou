@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Avatar:</b>
+  <%= @growth_log.avatar_id %>
+</p>
+
+<p>
+  <b>Growth type:</b>
+  <%= @growth_log.growth_type %>
+</p>
+
+<p>
+  <b>Is informed:</b>
+  <%= @growth_log.is_informed %>
+</p>
+
+
+<%= link_to 'Edit', edit_growth_log_path(@growth_log) %> |
+<%= link_to 'Back', growth_logs_path %>

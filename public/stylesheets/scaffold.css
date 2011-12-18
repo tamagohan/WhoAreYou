@@ -54,3 +54,24 @@ div.field, div.actions {
   font-size: 12px;
   list-style: square;
 }
+#tweet{
+  width : 740px; 
+  height: 70px;
+  border-bottom: 1px dashed;
+}
+
+#tw_image {
+  float : left;
+  width : 40px;
+}
+
+#tw_str {
+  width : 700px;
+  height: 70px;
+  position:relative;
+}
+
+#tw_body {
+  position:absolute;
+  bottom:0;
+}

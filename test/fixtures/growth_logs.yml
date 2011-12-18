@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  avatar_id: 1
+  growth_type: 1
+  is_informed: false
+
+two:
+  avatar_id: 1
+  growth_type: 1
+  is_informed: false

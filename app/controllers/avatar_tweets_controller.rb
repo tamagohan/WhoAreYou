@@ -1,4 +1,7 @@
 class AvatarTweetsController < ApplicationController
+  require 'yahoo_api'
+  include YahooApi
+
   # GET /avatar_tweets
   # GET /avatar_tweets.xml
   def index
@@ -41,6 +44,9 @@ class AvatarTweetsController < ApplicationController
   # POST /avatar_tweets.xml
   def create
     @avatar_tweet = AvatarTweet.new(params[:avatar_tweet])
+#     keyphrases = YahooApi::Keyphrase.new.get(params[:avatar_tweet][:tw_av_str])
+#     webunit = YahooApi::Webunit.new.get(keyphrases.first[:text])
+#     @avatar_tweet.tw_av_str.sub!(keyphrases.first[:text], webunit)
 
     respond_to do |format|
       if @avatar_tweet.save

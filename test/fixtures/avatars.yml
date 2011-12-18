@@ -1,15 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  acount_id: 1
-  avatar_tweet_id: 1
+  id: 1
+  account_id: 1
   name: MyString
   birthday: 2011-12-11 00:28:58
   sex: 1
 
 two:
-  acount_id: 1
-  avatar_tweet_id: 1
+  id: 2
+  account_id: 2
   name: MyString
   birthday: 2011-12-11 00:28:58
   sex: 1
