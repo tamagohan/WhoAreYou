@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218050916) do
+ActiveRecord::Schema.define(:version => 20111218052255) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20111218050916) do
     t.string   "auth_id"
     t.string   "auth_password"
     t.string   "twitter_name"
-    t.integer  "last_cp_tw_id", :default => 0
+    t.decimal  "last_cp_tw_id", :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20111218050916) do
     t.integer  "tweet_id"
     t.string   "oauth_token"
     t.string   "oauth_verifier"
-    t.integer  "last_tw_id",     :default => 0
+    t.decimal  "last_tw_id",     :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
