@@ -87,7 +87,7 @@ class TwittersController < ApplicationController
     #Twitterから未認可のrequest tokenを発行してもらう
     request_token = self.consumer.get_request_token(
                                                     #コールバックURLの指定
-       :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
+       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
                                                     )
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
