@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218025338) do
+ActiveRecord::Schema.define(:version => 20111218050916) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20111218025338) do
 
   create_table "avatar_tweets", :force => true do |t|
     t.integer  "avatar_twitter_id"
-    t.integer  "tw_av_id"
+    t.decimal  "tw_av_id"
     t.string   "tw_av_str"
     t.integer  "tw_av_type"
     t.string   "tw_av_image_url"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20111218025338) do
 
   create_table "tweets", :force => true do |t|
     t.integer  "twitter_id"
-    t.integer  "tw_id"
+    t.decimal  "tw_id"
     t.string   "tw_str"
     t.integer  "tw_type"
     t.string   "tw_image_url"
