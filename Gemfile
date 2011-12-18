@@ -12,6 +12,7 @@ gem 'oauth'
 gem 'rubytter'
 gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
 gem 'test-unit'
+gem 'heroku'
 
 # Use unicorn as the web server
 # gem 'unicorn'
