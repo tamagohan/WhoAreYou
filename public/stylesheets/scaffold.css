@@ -67,11 +67,5 @@ div.field, div.actions {
 
 #tw_str {
   width : 700px;
-  height: 70px;
-  position:relative;
 }
 
-#tw_body {
-  position:absolute;
-  bottom:0;
-}

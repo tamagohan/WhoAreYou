@@ -65,7 +65,6 @@ module YahooApi
 
       open(url) do |fp|
         fp.each do |line|
-          p line
           result += line
         end
       end

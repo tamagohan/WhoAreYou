@@ -51,7 +51,7 @@
   <% end %>
 <% end %>
 </br>
-<%= image_tag (@avatar.image_url) %></br>
+<%= image_tag (@avatar.image_url) if @avatar.image_url%></br>
 </br>
 </br>
 <%= link_to 'Edit', edit_avatar_path(@avatar) %> 

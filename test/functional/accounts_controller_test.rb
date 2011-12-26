@@ -28,8 +28,8 @@ class AccountsControllerTest < ActionController::TestCase
     assert_difference('Account.count') do
       post :create, @success_create_params
     end
-
-    assert_redirected_to account_path(assigns(:account))
+    assert_redirected_to new_account_session_path
+#    assert_redirected_to account_path(assigns(:account))
   end
 
   test "should show account" do

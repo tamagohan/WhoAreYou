@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   account_id: 1
   tweet_id: 1
   oauth_token: MyString
@@ -8,8 +9,9 @@ one:
   last_tw_id: 1
 
 two:
-  account_id: 1
-  tweet_id: 1
+  id: 2
+  account_id: 2
+  tweet_id: 2
   oauth_token: MyString
   oauth_verifier: MyString
   last_tw_id: 1

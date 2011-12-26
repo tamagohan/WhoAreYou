@@ -13,7 +13,7 @@
   <div id="timeline">
     <dl>
       <% for tweet in @twitter.tweets do %>
-      <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} %></dt>
+      <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} if tweet.tw_image_url %></dt>
         <dd><%= tweet.tw_id %></dd>
         <dd><%= tweet.tw_str %></dd>
       <% end %>
