@@ -1,27 +1,16 @@
-# -*- coding: utf-8 -*-
-# YahooApiにリクエストするためopenメソッドを使います
 require "open-uri"
-# YahooApiからXML形式でレスポンスをもらうので解析します
 require "rexml/document"  
 
-# 実はRubyでmodule作るの初めてだったりします
 module YahooApi
-  # http://developer.yahoo.co.jp/ からYahooApiを利用するためのAPPID取得して下さい
-  # moduleに設定ファイルを置いてしまうのは本当はあまり良くないかもしれません...
+  # TODO APPID should be written in yml file
   APPID = "BEhzvxqxg66d5mJOJs01piXLVCLFZBFjF.D.RPahjYl35GT0ILsK83rrQJf94Y_b.bIGfg--"
 
-  # キーフレーズ抽出API
-  # http://developer.yahoo.co.jp/webapi/jlp/keyphrase/v1/extract.html
-  # 基本的に YahooApi::Keyphrase.new.get(text) という感じの利用を想定しています
   class Keyphrase
-    
-    # このメソッドがリクエストとパースを呼び出します.
     def get(text)
       xml_text = request(text)
       return parse(xml_text)
     end
 
-    # YahooAPIにリクエスト、XMLを取得して文字列で返します
     def request(text)
       result  = ""
       text    = URI.encode text
@@ -35,7 +24,6 @@ module YahooApi
       return result
     end
 
-    # xmlを解析して配列を返します
     def parse(xml_text)
       keyphrases = []
       xml = REXML::Document.new xml_text
@@ -49,15 +37,13 @@ module YahooApi
     end
   end
 
+  # get related word
   class Webunit
-    
-    # このメソッドがリクエストとパースを呼び出します.
     def get(text)
       xml_text = request(text)
       return parse(xml_text)
     end
 
-    # YahooAPIにリクエスト、XMLを取得して文字列で返します
     def request(text)
       result  = ""
       text    = URI.encode text
@@ -71,7 +57,6 @@ module YahooApi
       return result
     end
 
-    # xmlを解析して配列を返します
     def parse(xml_text)
       xml = REXML::Document.new xml_text
       xml.elements["/ResultSet/Result"].text unless xml.elements["/ResultSet/Result"].nil?

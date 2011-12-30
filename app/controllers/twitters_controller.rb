@@ -85,20 +85,18 @@ class TwittersController < ApplicationController
   end
 
   def oauth
-    #Twitterから未認可のrequest tokenを発行してもらう
+    #receive unauthorized request token from twitter
     request_token = self.consumer.get_request_token(
-                                                    #コールバックURLの指定
        :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
                                                     )
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
-    #未認可のrequest tokenをURLに含め、Twitterの認証画面にリダイレクト
     redirect_to request_token.authorize_url
   end
 
   def callback
     consumer = self.consumer
-    #許可済みのrequest tokenをaccess tokenと交換する
+    # make a trade of access token to authorized request token
     request_token = OAuth::RequestToken.new(
       consumer,
       session[:request_token],
@@ -114,7 +112,7 @@ class TwittersController < ApplicationController
       redirect_to :controller => :avatars, :action => :show, :id => current_account.avatar.id
       return
     end
-     #access tokenが正しいか検証
+    #validate access token
     response = consumer.request(
       :get,
       '/account/verify_credentials.json', access_token, { :scheme => :query_string }
@@ -132,8 +130,8 @@ class TwittersController < ApplicationController
         redirect_to :controller => :avatars, :action => :show, :id => current_account.avatar.id
       return
     end
-     #正しいaccess tokenと判明したので、セッションに保存しておく
-     #request tokenはもう要らないので破棄
+
+    # access token save at twitter table.
     if current_account.twitter.nil?
       tw = Twitter.new()
       tw.account = current_account
@@ -167,7 +165,7 @@ class TwittersController < ApplicationController
 
       if current_account.twitter.nil?
       end
-      #一度認証された後はaccess tokenだけでアクセス出来る
+      # enable access to twitter only by access token
       token = OAuth::AccessToken.new(
         self.consumer,
         session[:oauth_token],
