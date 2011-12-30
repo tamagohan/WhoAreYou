@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 class AvatarTwittersController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_admin, :except => [:show]
+  before_filter :require_account, :only => [:show]
 
   # GET /avatar_twitters
   # GET /avatar_twitters.xml
@@ -84,4 +86,17 @@ class AvatarTwittersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def require_account
+    if current_account.nil?
+      store_location
+      flash[:notice] = 'ログインしてください。'
+      redirect_to new_account_session_url
+      return false
+    elsif !current_account.is_administrator and AvatarTwitter.find(params[:id]).avatar.account != current_account
+      redirect_to current_account
+      return false
+    end
+  end
+
 end

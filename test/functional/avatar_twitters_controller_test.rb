@@ -37,8 +37,17 @@ class AvatarTwittersControllerTest < ActionController::TestCase
     assert_template :show
   end
 
-  test "should not show my avatar_twitter by general user" do
+  test "should show my avatar_twitter by general user" do
     general_user = accounts(:one)
+    assert(AccountSession.create(general_user))
+
+    get :show, :id => @av_twitter.to_param
+    assert_response :success
+    assert_template :show
+  end
+
+  test "should not show other user's avatar_twitter by general user" do
+    general_user = accounts(:general)
     assert(AccountSession.create(general_user))
 
     get :show, :id => @av_twitter.to_param
