@@ -57,7 +57,7 @@ class AvatarsController < ApplicationController
     end
     @avatar = Avatar.new(params[:avatar])
     @avatar.birthday = Time.now.utc
-    @avatar.image_url = "/images/pityu.jpg"
+    @avatar.image_url = "/images/avatar.jpg"
 
     respond_to do |format|
       if @avatar.save

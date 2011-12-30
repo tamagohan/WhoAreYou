@@ -87,7 +87,10 @@ class TwittersController < ApplicationController
   def oauth
     #receive unauthorized request token from twitter
     request_token = self.consumer.get_request_token(
-       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
+#       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
+       # if in localhost, use follow                                                    
+       :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
+                                                    
                                                     )
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
@@ -152,7 +155,7 @@ class TwittersController < ApplicationController
       av_tw.twitter_name = current_account.avatar.name
       av_tw.save
       av = current_account.avatar
-      av.image_url = "/images/pikatyu.jpeg"
+      av.image_url = "/images/avatar2.jpg"
       twitter_primer = Item.find_by_item_type(1)
       av.items.push(twitter_primer)
       av.save
