@@ -87,9 +87,9 @@ class TwittersController < ApplicationController
   def oauth
     #receive unauthorized request token from twitter
     request_token = self.consumer.get_request_token(
-#       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
+       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
        # if in localhost, use follow                                                    
-       :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
+       # :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
                                                     
                                                     )
     session[:request_token] = request_token.token
