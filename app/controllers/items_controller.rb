@@ -1,4 +1,9 @@
+# -*- coding: utf-8 -*-
 class ItemsController < ApplicationController
+  before_filter :require_admin, :except => [:show]
+  before_filter :require_account, :only => [:show]
+
+
   # GET /items
   # GET /items.xml
   def index
@@ -78,6 +83,19 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(items_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def require_account
+    if current_account.nil?
+      store_location
+      flash[:notice] = 'ログインしてください。'
+      redirect_to new_account_session_url
+      return false
+    elsif !current_account.is_administrator and
+        !Item.find(params[:id]).avatars.include?(current_account.avatar)
+      redirect_to current_account
+      return false
     end
   end
 end

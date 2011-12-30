@@ -1,4 +1,6 @@
 class AvatarTwittersController < ApplicationController
+  before_filter :require_admin
+
   # GET /avatar_twitters
   # GET /avatar_twitters.xml
   def index

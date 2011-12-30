@@ -49,7 +49,10 @@ class AvatarsController < ApplicationController
   # POST /avatars
   # POST /avatars.xml
   def create
-    unless current_account.is_administrator
+    if current_account.nil?
+      redirect_to new_account_session_url
+      return
+    elsif !current_account.is_administrator
       params[:avatar][:account_id] = current_account.id
     end
     @avatar = Avatar.new(params[:avatar])

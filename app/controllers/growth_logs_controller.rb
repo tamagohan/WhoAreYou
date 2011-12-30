@@ -1,4 +1,6 @@
 class GrowthLogsController < ApplicationController
+  before_filter :require_admin
+
   # GET /growth_logs
   # GET /growth_logs.xml
   def index

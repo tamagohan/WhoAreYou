@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   avatar_twitter_id: 1
   tw_av_id: 1
   tw_av_str: MyString
@@ -8,7 +9,8 @@ one:
   tw_av_image_url: MyString
 
 two:
-  avatar_twitter_id: 1
+  id: 2
+  avatar_twitter_id: 2
   tw_av_id: 1
   tw_av_str: MyString
   tw_av_type: 1

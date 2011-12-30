@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
 class AvatarTweetsController < ApplicationController
+  before_filter :require_admin
+
   require 'yahoo_api'
   include YahooApi
 
@@ -44,9 +47,6 @@ class AvatarTweetsController < ApplicationController
   # POST /avatar_tweets.xml
   def create
     @avatar_tweet = AvatarTweet.new(params[:avatar_tweet])
-#     keyphrases = YahooApi::Keyphrase.new.get(params[:avatar_tweet][:tw_av_str])
-#     webunit = YahooApi::Webunit.new.get(keyphrases.first[:text])
-#     @avatar_tweet.tw_av_str.sub!(keyphrases.first[:text], webunit)
 
     respond_to do |format|
       if @avatar_tweet.save
@@ -86,4 +86,5 @@ class AvatarTweetsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end

@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if current_account.is_administrator %>
+  <% if current_account && current_account.is_administrator %>
     <div class="field">
       <%= f.label :parent %><br />
       <%= select("avatar", "account_id", @accounts) %>

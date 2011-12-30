@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class TwittersController < ApplicationController
-#  before_filter :require_admin, :except => [:oauth, :callback, :get_tweets]
+  before_filter :require_admin, :except => [:oauth, :callback, :get_tweets]
+
   # GET /twitters
   # GET /twitters.xml
   def index

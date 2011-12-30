@@ -6,6 +6,7 @@ one:
   name: MyString
   birthday: 2011-12-11 00:28:58
   sex: 1
+  image_url: 'public/image/avatar_image.jpg'
 
 two:
   id: 2
@@ -13,3 +14,4 @@ two:
   name: MyString
   birthday: 2011-12-11 00:28:58
   sex: 1
+  image_url: 'public/image/avatar_image.jpg'
