@@ -15,6 +15,7 @@ gem 'heroku'
 
 group :test do
   gem 'test-unit'
+  gem 'mocha'
 end
 
 # Use unicorn as the web server

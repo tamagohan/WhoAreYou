@@ -55,7 +55,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     mime-types (1.17.2)
+    mocha (0.10.0)
+      metaclass (~> 0.0.1)
     oauth (0.4.5)
     polyglot (0.3.3)
     rack (1.2.4)
@@ -98,6 +101,7 @@ PLATFORMS
 DEPENDENCIES
   authlogic!
   heroku
+  mocha
   oauth
   rails (= 3.0.7)
   rake (= 0.8.7)

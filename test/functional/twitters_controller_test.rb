@@ -6,6 +6,7 @@ class TwittersControllerTest < ActionController::TestCase
     activate_authlogic
   end
 
+  ################## AuthLogic test #######################
   ### index
   test "should get index" do
     assert(AccountSession.create(accounts(:admin)))
@@ -175,4 +176,89 @@ class TwittersControllerTest < ActionController::TestCase
     assert_redirected_to new_account_session_path
   end
 
+  #########################################################
+
+  test "should redirect to twitter" do
+    post :oauth
+    assert /http:\/\/api.twitter.com\/oauth\/authorize/ =~ @response.body
+  end
+
+  test "should create new twitter." do
+    general_user = accounts(:not_has_twitter)
+    assert(AccountSession.create(general_user))
+    consumer = OAuth::Consumer.new(
+      AppConfig[:twitter_consumer_key],
+      AppConfig[:twitter_consumer_secret],
+      { :site => "http://api.twitter.com" }
+    )
+    request_token = OAuth::RequestToken.new(
+      consumer,
+      AppConfig[:twitter_test_bot_oauth_token],
+      AppConfig[:twitter_test_bot_oauth_verifier]
+    )
+
+    assert_difference('Twitter.count') do
+      assert_difference('AvatarTwitter.count') do
+        OAuth::RequestToken.any_instance.stubs(:get_access_token).returns(request_token)
+        get :callback
+        OAuth::RequestToken.any_instance.unstub(:get_access_token)
+      end
+    end
+    assert_template :controller => :avatars, :action => :show, :id => general_user.avatar.id
+  end
+
+  test "should not create new twitter." +
+    "because user not allow to access twitter." do
+    general_user = accounts(:not_has_twitter)
+    assert(AccountSession.create(general_user))
+
+    assert_no_difference('Twitter.count') do
+      assert_no_difference('AvatarTwitter.count') do
+        get :callback
+      end
+    end
+    assert_template :controller => :avatars, :action => :show, :id => general_user.avatar.id
+  end
+
+  test "should redirect to oauth" do
+    post :get_tweets
+    assert_redirected_to :action => :oauth
+  end
+
+  test "should not redirect to oauth, and save tweet" do
+    general_user = accounts(:anatta_test_bot)
+    assert(AccountSession.create(general_user))
+    session[:oauth] = true
+    session[:oauth_token] = general_user.twitter.oauth_token
+    session[:oauth_verifier] = general_user.twitter.oauth_verifier
+    tweets_count = get_test_bot_tweets_count(general_user.twitter)
+
+    assert_difference('Tweet.count', tweets_count) do
+      assert_difference('AvatarTweet.count', tweets_count) do
+        assert_no_difference('Twitter.count') do
+          assert_no_difference('AvatarTwitter.count') do
+            post :get_tweets
+          end
+        end
+      end
+    end
+    assert_template :controller => :avatar, :action => :show
+  end
+
+  def get_test_bot_tweets_count(twitter)
+    consumer = OAuth::Consumer.new(
+      AppConfig[:twitter_consumer_key],
+      AppConfig[:twitter_consumer_secret],
+      { :site => "http://api.twitter.com" }
+    )
+    token = OAuth::AccessToken.new(
+        consumer,
+        twitter.oauth_token,
+        twitter.oauth_verifier
+      )
+    rubytter = OAuthRubytter.new(token)
+    id = rubytter.verify_credentials.id_str
+    @friends_timelines = rubytter.user_timeline(id)
+    return @friends_timelines.count
+  end
 end

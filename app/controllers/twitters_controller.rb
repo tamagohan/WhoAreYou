@@ -86,12 +86,15 @@ class TwittersController < ApplicationController
 
   def oauth
     #receive unauthorized request token from twitter
+    if ENV['CALLBACK_URL']
     request_token = self.consumer.get_request_token(
-       :oauth_callback => "http://who-are-you.heroku.com/twitters/callback"
-       # if in localhost, use follow                                                    
-       # :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
-                                                    
+      :oauth_callback => "http://#{ENV['CALLBACK_URL']}.heroku.com/twitters/callback"
                                                     )
+    else
+    request_token = self.consumer.get_request_token(
+      :oauth_callback => "http://#{request.host_with_port}/twitters/callback"
+                                                    )
+    end
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
     redirect_to request_token.authorize_url
@@ -115,10 +118,10 @@ class TwittersController < ApplicationController
       redirect_to :controller => :avatars, :action => :show, :id => current_account.avatar.id
       return
     end
+
     #validate access token
     response = consumer.request(
-      :get,
-      '/account/verify_credentials.json', access_token, { :scheme => :query_string }
+      :get, '/account/verify_credentials.json', access_token, { :scheme => :query_string }
     )
     case response
       when Net::HTTPSuccess
@@ -133,6 +136,11 @@ class TwittersController < ApplicationController
         redirect_to :controller => :avatars, :action => :show, :id => current_account.avatar.id
       return
     end
+    session[:request_token] = nil
+    session[:request_token_secret] = nil
+    session[:oauth] = true
+    session[:oauth_token] = access_token.token
+    session[:oauth_verifier] = access_token.secret
 
     # access token save at twitter table.
     if current_account.twitter.nil?
@@ -144,22 +152,7 @@ class TwittersController < ApplicationController
     tw.oauth_token    = access_token.token
     tw.oauth_verifier = access_token.secret
     tw.save
-    session[:request_token] = nil
-    session[:request_token_secret] = nil
-    session[:oauth] = true
-    session[:oauth_token] = access_token.token
-    session[:oauth_verifier] = access_token.secret
-    if current_account.avatar.avatar_twitter.nil?
-      av_tw = AvatarTwitter.new()
-      av_tw.avatar = current_account.avatar
-      av_tw.twitter_name = current_account.avatar.name
-      av_tw.save
-      av = current_account.avatar
-      av.image_url = "/images/avatar2.jpg"
-      twitter_primer = Item.find_by_item_type(1)
-      av.items.push(twitter_primer)
-      av.save
-    end
+
     redirect_to :action => :get_tweets
   end
 
@@ -177,10 +170,10 @@ class TwittersController < ApplicationController
       rubytter = OAuthRubytter.new(token)
       id = rubytter.verify_credentials.id_str
       image_url = rubytter.verify_credentials.profile_image_url_https
-      @friends_timelines = rubytter.user_timeline(id)
       current_twitter = current_account.twitter
-      @friends_timelines.sort_by!{|tweet| tweet.id}
       last_tweet = current_twitter.last_tw_id
+      @friends_timelines = rubytter.user_timeline(id)
+      @friends_timelines.sort_by!{|tweet| tweet.id}
       @friends_timelines.each do |tweet|
         if tweet.id.to_i > last_tweet
           twt = Tweet.new
@@ -193,7 +186,6 @@ class TwittersController < ApplicationController
           last_tweet = tweet.id.to_i
         end
       end
-
       
       @msg = []
       logs = GrowthLog.find(:all, :conditions => ['avatar_id =? and is_informed=?', current_account.avatar.id, false])
@@ -214,7 +206,7 @@ class TwittersController < ApplicationController
       end
       @avatar = current_account.avatar
       @age = (Time.now.utc - @avatar.birthday).divmod(24*60*60)[0]
-      render :template => "avatars/show" 
+      render :template => "avatars/show"
     else
       redirect_to :action => :oauth
     end

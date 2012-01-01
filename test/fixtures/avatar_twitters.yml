@@ -15,3 +15,11 @@ two:
   auth_password: MyString
   twitter_name: MyString
   last_cp_tw_id: 1
+
+three:
+  id: 3
+  avatar_id: 3
+  auth_id: MyString
+  auth_password: MyString
+  twitter_name: MyString
+  last_cp_tw_id: 1

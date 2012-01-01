@@ -15,3 +15,21 @@ two:
   birthday: 2011-12-11 00:28:58
   sex: 1
   image_url: 'public/image/avatar_image.jpg'
+
+
+three:
+  id: 3
+  account_id: 5
+  name: MyString
+  birthday: 2011-12-11 00:28:58
+  sex: 1
+  image_url: 'public/image/avatar_image.jpg'
+
+not_has_twitter:
+  id: 4
+  account_id: 6
+  name: not_has_twitter
+  birthday: 2011-12-11 00:28:58
+  sex: 1
+  image_url: 'public/image/avatar_image.jpg'
+

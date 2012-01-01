@@ -37,3 +37,21 @@ general:
   persistence_token: MyString
   login_count: 1
   role: 1
+
+anatta_test_bot:
+  id: 5
+  login: anatta_test_bot
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  login_count: 1
+  role: 1
+
+not_has_twitter:
+  id: 6
+  login: not_has_twitter
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  login_count: 1
+  role: 1
