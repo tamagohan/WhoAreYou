@@ -3,15 +3,18 @@ development:
   twitter_consumer_secret: 'd2y1MRqXQLSutSozHUGF9FsTNDhN6bNwWZOAb14Ku2k'
   twitter_test_bot_oauth_token: "450601838-557X1YW6NhdEXHGcntAKM9nwAmTrIVWRdE1BSPeB"
   twitter_test_bot_oauth_verifier: "U3awi07IKaTgF2mGtAwVFjeSL3B8s6MZfbYMblRxc"
+  yahoo_app_id: "BEhzvxqxg66d5mJOJs01piXLVCLFZBFjF.D.RPahjYl35GT0ILsK83rrQJf94Y_b.bIGfg--"
 
 test:
   twitter_consumer_key: '0SyImxfqzhNJXCYSXFTk2Q'
   twitter_consumer_secret: 'd2y1MRqXQLSutSozHUGF9FsTNDhN6bNwWZOAb14Ku2k'
   twitter_test_bot_oauth_token: "450601838-557X1YW6NhdEXHGcntAKM9nwAmTrIVWRdE1BSPeB"
   twitter_test_bot_oauth_verifier: "U3awi07IKaTgF2mGtAwVFjeSL3B8s6MZfbYMblRxc"
+  yahoo_app_id: "BEhzvxqxg66d5mJOJs01piXLVCLFZBFjF.D.RPahjYl35GT0ILsK83rrQJf94Y_b.bIGfg--"
 
 production:
   twitter_consumer_key: '0SyImxfqzhNJXCYSXFTk2Q'
   twitter_consumer_secret: 'd2y1MRqXQLSutSozHUGF9FsTNDhN6bNwWZOAb14Ku2k'
   twitter_test_bot_oauth_token: "450601838-557X1YW6NhdEXHGcntAKM9nwAmTrIVWRdE1BSPeB"
   twitter_test_bot_oauth_verifier: "U3awi07IKaTgF2mGtAwVFjeSL3B8s6MZfbYMblRxc"
+  yahoo_app_id: "BEhzvxqxg66d5mJOJs01piXLVCLFZBFjF.D.RPahjYl35GT0ILsK83rrQJf94Y_b.bIGfg--"

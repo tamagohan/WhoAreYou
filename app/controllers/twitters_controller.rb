@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 class TwittersController < ApplicationController
-  before_filter :require_admin, :except => [:oauth, :callback, :get_tweets]
+  require 'yahoo_api'
+  include YahooApi
+
+  before_filter :require_admin, :except => [:show, :oauth, :callback, :get_tweets]
+  before_filter :require_account, :only => [:show]
 
   # GET /twitters
   # GET /twitters.xml
@@ -17,6 +21,30 @@ class TwittersController < ApplicationController
   # GET /twitters/1.xml
   def show
     @twitter = Twitter.find(params[:id])
+    @tweets = @twitter.tweets.sort_by{|tw| -tw.id}
+
+    if session[:oauth]
+      rubytter = get_rubytter_obj
+      id = rubytter.verify_credentials.id_str
+      opts = {:count => 50}
+      @user_timeline = rubytter.user_timeline(id, opts)
+      result = [ ]
+      @user_timeline.each do |tweet|
+        result << YahooApi::MorphologicalAnalysis.new.get(tweet.text)
+      end
+
+      phrase_ranking = { }
+      result.flatten!.each do |hash|
+        if hash[:pos] != '助詞' and hash[:pos] != '助動詞' and hash[:pos] != '特殊'
+          if phrase_ranking.has_key?(hash[:word].to_sym)
+            phrase_ranking[hash[:word].to_sym] += 1
+          else
+            phrase_ranking[hash[:word].to_sym] = 1
+          end
+        end
+      end
+      @favorite_phrase = phrase_ranking.sort {|a, b| b[1]<=>a[1]}
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -159,22 +187,14 @@ class TwittersController < ApplicationController
   def get_tweets
     if session[:oauth]
 
-      if current_account.twitter.nil?
-      end
-      # enable access to twitter only by access token
-      token = OAuth::AccessToken.new(
-        self.consumer,
-        session[:oauth_token],
-        session[:oauth_verifier]
-      )
-      rubytter = OAuthRubytter.new(token)
+      rubytter = get_rubytter_obj
       id = rubytter.verify_credentials.id_str
       image_url = rubytter.verify_credentials.profile_image_url_https
       current_twitter = current_account.twitter
       last_tweet = current_twitter.last_tw_id
-      @friends_timelines = rubytter.user_timeline(id)
-      @friends_timelines.sort_by!{|tweet| tweet.id}
-      @friends_timelines.each do |tweet|
+      @user_timeline = rubytter.user_timeline(id)
+      @user_timeline.sort_by!{|tweet| tweet.id}
+      @user_timeline.each do |tweet|
         if tweet.id.to_i > last_tweet
           twt = Tweet.new
           twt.twitter_id = current_twitter.id
@@ -212,4 +232,24 @@ class TwittersController < ApplicationController
     end
   end
 
+  def require_account
+    if current_account.nil?
+      store_location
+      flash[:notice] = 'ログインしてください。'
+      redirect_to new_account_session_url
+      return false
+    elsif !current_account.is_administrator and Twitter.find(params[:id]).account != current_account
+      redirect_to current_account
+      return false
+    end
+  end
+
+  def get_rubytter_obj
+    token = OAuth::AccessToken.new(
+                                   self.consumer,
+                                   session[:oauth_token],
+                                   session[:oauth_verifier]
+                                   )
+    rubytter = OAuthRubytter.new(token)
+  end
 end

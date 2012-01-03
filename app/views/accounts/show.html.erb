@@ -16,5 +16,9 @@
    <%= link_to 'アバターを観察する', avatar_path(@account.avatar) %> <br> 
 <% end %>
 
+<% unless @account.twitter.nil? %>
+   <%= link_to 'twitter情報を確認する(時間がかかります)', twitter_path(@account.twitter) %> <br> 
+<% end %>
+
 <%= link_to 'Edit', edit_account_path(@account) %>
 <%= link_to 'index', accounts_path if current_account.is_administrator%> 

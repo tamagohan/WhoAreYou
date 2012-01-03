@@ -1,29 +1,49 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Account:</b>
-  <%= @twitter.account_id %>
+  <b>
+  <%= @twitter.account.login %>さんのtwitter情報
+  </b>
 </p>
+
+<% unless @favorite_phrase.nil? %>
+  <p>
+    <b>口癖解析結果</b>
+  </p>
+
+  <table>
+    <tr>
+      <th>順位</th>
+      <th>単語</th>
+    </tr>
+    <% @favorite_phrase.each_with_index do |(word, count), index| %>
+      <% break if index >= 10 %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= word %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <p>
-  <b>Tweet:</b>
-  <%= @twitter.tweet_id %>
+  <b>あなたのつぶやき</b>
 </p>
 
-  <div id="timeline">
-    <dl>
-      <% for tweet in @twitter.tweets do %>
-      <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} if tweet.tw_image_url %></dt>
-        <dd><%= tweet.tw_id %></dd>
-        <dd><%= tweet.tw_str %></dd>
-      <% end %>
-    </dl>
-  </div>
-
-<p>
-  <b>Last tw:</b>
-  <%= @twitter.last_tw_id %>
-</p>
+<div id="timeline">
+  <dl>
+    <% for tweet in @tweets do %>
+      <div id="tweet">
+	<div id="tw_image">
+          <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} if tweet.tw_image_url %></dt>
+	</div>
+	<div id="tw_str">
+          <dd><%= tweet.tw_str %></dd>
+	</div>
+      </div>
+    <% end %>
+  </dl>
+</div>
 
 
 <%= link_to 'Edit', edit_twitter_path(@twitter) %> |

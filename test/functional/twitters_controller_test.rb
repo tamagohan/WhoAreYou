@@ -38,6 +38,15 @@ class TwittersControllerTest < ActionController::TestCase
     assert_template :show
   end
 
+  test "should show my twitter by general user" do
+    general_user = accounts(:one)
+    assert(AccountSession.create(general_user))
+
+    get :show, :id => @twitter.to_param
+    assert_response :success
+    assert_template :show
+  end
+
   test "should not show other user's twitter by general user" do
     general_user = accounts(:general)
     assert(AccountSession.create(general_user))
@@ -178,11 +187,13 @@ class TwittersControllerTest < ActionController::TestCase
 
   #########################################################
 
+  ### oauth
   test "should redirect to twitter" do
     post :oauth
     assert /http:\/\/api.twitter.com\/oauth\/authorize/ =~ @response.body
   end
 
+  ### callback
   test "should create new twitter." do
     general_user = accounts(:not_has_twitter)
     assert(AccountSession.create(general_user))
@@ -220,6 +231,7 @@ class TwittersControllerTest < ActionController::TestCase
     assert_template :controller => :avatars, :action => :show, :id => general_user.avatar.id
   end
 
+  ### get_tweets
   test "should redirect to oauth" do
     post :get_tweets
     assert_redirected_to :action => :oauth
@@ -244,6 +256,24 @@ class TwittersControllerTest < ActionController::TestCase
     end
     assert_template :controller => :avatar, :action => :show
   end
+
+  ### show
+  test "should analyze favorite phrase" do
+    general_user = accounts(:anatta_test_bot)
+    twitter = general_user.twitter
+    assert(AccountSession.create(general_user))
+
+    session[:oauth] = true
+    session[:oauth_token] = twitter.oauth_token
+    session[:oauth_verifier] = twitter.oauth_verifier
+
+    get :show, :id => twitter.id.to_s
+    assert_response :success
+    assert_template :show
+    assert_equal 'test'.to_sym, assigns(:favorite_phrase)[0][0]
+    assert_equal get_test_bot_tweets_count(twitter), assigns(:favorite_phrase)[0][1]
+  end
+
 
   def get_test_bot_tweets_count(twitter)
     consumer = OAuth::Consumer.new(
