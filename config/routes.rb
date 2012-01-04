@@ -1,4 +1,6 @@
 WhoAreYou::Application.routes.draw do
+  resources :emotional_words
+
   resources :items
 
   resources :growth_logs

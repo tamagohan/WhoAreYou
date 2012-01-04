@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  word: MyString
+  reading: MyString
+  pos: 1
+  semantic_orientation: 9.99
+
+two:
+  word: MyString
+  reading: MyString
+  pos: 1
+  semantic_orientation: 9.99

@@ -1,0 +1,29 @@
+<h1>Listing emotional_words</h1>
+
+<table>
+  <tr>
+    <th>Word</th>
+    <th>Reading</th>
+    <th>Pos</th>
+    <th>Semantic orientation</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @emotional_words.each do |emotional_word| %>
+  <tr>
+    <td><%= emotional_word.word %></td>
+    <td><%= emotional_word.reading %></td>
+    <td><%= emotional_word.pos %></td>
+    <td><%= emotional_word.semantic_orientation %></td>
+    <td><%= link_to 'Show', emotional_word %></td>
+    <td><%= link_to 'Edit', edit_emotional_word_path(emotional_word) %></td>
+    <td><%= link_to 'Destroy', emotional_word, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Emotional word', new_emotional_word_path %>

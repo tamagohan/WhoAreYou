@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Word:</b>
+  <%= @emotional_word.word %>
+</p>
+
+<p>
+  <b>Reading:</b>
+  <%= @emotional_word.reading %>
+</p>
+
+<p>
+  <b>Pos:</b>
+  <%= @emotional_word.pos %>
+</p>
+
+<p>
+  <b>Semantic orientation:</b>
+  <%= @emotional_word.semantic_orientation %>
+</p>
+
+
+<%= link_to 'Edit', edit_emotional_word_path(@emotional_word) %> |
+<%= link_to 'Back', emotional_words_path %>

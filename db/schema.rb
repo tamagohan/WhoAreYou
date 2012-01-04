@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218052255) do
+ActiveRecord::Schema.define(:version => 20120104010738) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(:version => 20111218052255) do
     t.integer "avatar_id"
     t.integer "item_id"
   end
+
+  create_table "emotional_words", :force => true do |t|
+    t.string   "word"
+    t.string   "reading"
+    t.integer  "pos"
+    t.decimal  "semantic_orientation", :precision => 10, :scale => 8, :default => 0.0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "emotional_words", ["word"], :name => "index_emotional_words_on_word"
 
   create_table "growth_logs", :force => true do |t|
     t.integer  "avatar_id"

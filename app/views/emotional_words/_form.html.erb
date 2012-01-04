@@ -1,0 +1,33 @@
+<%= form_for(@emotional_word) do |f| %>
+  <% if @emotional_word.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@emotional_word.errors.count, "error") %> prohibited this emotional_word from being saved:</h2>
+
+      <ul>
+      <% @emotional_word.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :word %><br />
+    <%= f.text_field :word %>
+  </div>
+  <div class="field">
+    <%= f.label :reading %><br />
+    <%= f.text_field :reading %>
+  </div>
+  <div class="field">
+    <%= f.label :pos %><br />
+    <%= f.text_field :pos %>
+  </div>
+  <div class="field">
+    <%= f.label :semantic_orientation %><br />
+    <%= f.text_field :semantic_orientation %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
