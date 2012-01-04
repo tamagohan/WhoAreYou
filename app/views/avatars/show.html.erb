@@ -42,6 +42,7 @@
      <%= submit_tag 'アバターにtwitter情報をダウンロードする' %>
   <% end %>
 <% unless @avatar.avatar_twitter.nil? %>
+(herokuの30秒ルールのため、取得するつぶやきは最新の5件のみです)</br>
 
   <%= link_to 'アバターのつぶやきをみる', 
       :controller => 'avatar_twitters', :action => 'show', 

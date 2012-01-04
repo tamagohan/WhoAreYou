@@ -29,7 +29,8 @@
 <p>
   <b>あなたのつぶやき</b>
 </p>
-
+感情値分析は2012/01/04以降に当サイトにダウンロードされたつぶやきに対してのみ実行されます。</br>
+つぶやきのダウンロードは<%= link_to 'ここ', avatar_path(@twitter.account.avatar) %>から
 <div id="timeline">
   <dl>
     <% for tweet in @tweets do %>
@@ -37,9 +38,22 @@
 	<div id="tw_image">
           <dt><%= image_tag tweet.tw_image_url, {:width => 40, :height => 40} if tweet.tw_image_url %></dt>
 	</div>
-	<div id="tw_str">
-          <dd><%= tweet.tw_str %></dd>
-	</div>
+	<% if tweet.emotion > 0.1 %>
+          <div id="positive_tw_str">
+            <dd><%= tweet.tw_str %></dd>
+            <dd>感情値<%= tweet.emotion %> ポジティブなつぶやきです。</dd>
+	  </div>
+	<% elsif tweet.emotion < -0.1 %>
+          <div id="negative_tw_str">
+            <dd><%= tweet.tw_str %></dd>
+            <dd>感情値<%= tweet.emotion %> ネガティブなつぶやきです。</dd>
+	  </div>
+	<% else %>
+          <div id="tw_str">
+            <dd><%= tweet.tw_str %></dd>
+            <dd>感情値<%= tweet.emotion %> いたって普通なつぶやきです。</dd>
+	  </div>
+	<% end %>
       </div>
     <% end %>
   </dl>

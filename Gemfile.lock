@@ -94,6 +94,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.31)
+    will_paginate (3.0.2)
 
 PLATFORMS
   ruby
@@ -108,3 +109,4 @@ DEPENDENCIES
   rubytter
   sqlite3
   test-unit
+  will_paginate

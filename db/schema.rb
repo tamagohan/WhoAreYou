@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104010738) do
+ActiveRecord::Schema.define(:version => 20120104021312) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20120104010738) do
     t.datetime "tw_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "emotion",       :precision => 11, :scale => 8, :default => 0.0, :null => false
   end
 
   create_table "twitters", :force => true do |t|

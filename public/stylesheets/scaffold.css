@@ -69,3 +69,13 @@ div.field, div.actions {
   width : 700px;
 }
 
+#positive_tw_str {
+  width : 700px;
+  color : #008000;
+}
+
+#negative_tw_str {
+  width : 700px;
+  color: #ff0000;
+}
+

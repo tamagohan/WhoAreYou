@@ -26,7 +26,7 @@ class TwittersController < ApplicationController
     if session[:oauth]
       rubytter = get_rubytter_obj
       id = rubytter.verify_credentials.id_str
-      opts = {:count => 50}
+      opts = {:count => 40}
       @user_timeline = rubytter.user_timeline(id, opts)
       result = [ ]
       @user_timeline.each do |tweet|
@@ -192,7 +192,8 @@ class TwittersController < ApplicationController
       image_url = rubytter.verify_credentials.profile_image_url_https
       current_twitter = current_account.twitter
       last_tweet = current_twitter.last_tw_id
-      @user_timeline = rubytter.user_timeline(id)
+      opts = {:count => 5}
+      @user_timeline = rubytter.user_timeline(id, opts)
       @user_timeline.sort_by!{|tweet| tweet.id}
       @user_timeline.each do |tweet|
         if tweet.id.to_i > last_tweet

@@ -12,6 +12,7 @@ gem 'oauth'
 gem 'rubytter'
 gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
 gem 'heroku'
+gem 'will_paginate'
 
 group :test do
   gem 'test-unit'

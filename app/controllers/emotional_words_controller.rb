@@ -2,7 +2,8 @@ class EmotionalWordsController < ApplicationController
   # GET /emotional_words
   # GET /emotional_words.xml
   def index
-    @emotional_words = EmotionalWord.all
+    @emotional_words = EmotionalWord.paginate(:page => params[:page], :per_page => 20)
+#    @emotional_words = EmotionalWord.all
 
     respond_to do |format|
       format.html # index.html.erb
