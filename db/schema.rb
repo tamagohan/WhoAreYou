@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104021312) do
+ActiveRecord::Schema.define(:version => 20120122014202) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(:version => 20120104021312) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role"
+  end
+
+  create_table "answers", :force => true do |t|
+    t.integer  "question_id"
+    t.integer  "account_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "avatar_tweets", :force => true do |t|
@@ -85,6 +93,13 @@ ActiveRecord::Schema.define(:version => 20120104021312) do
     t.integer  "item_type"
     t.text     "description"
     t.string   "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "content"
+    t.integer  "question_type", :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

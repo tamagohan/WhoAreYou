@@ -14,6 +14,6 @@ class AvatarTweet < ActiveRecord::Base
         break
       end
     end
-
   end
+
 end

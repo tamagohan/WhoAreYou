@@ -1,4 +1,8 @@
 WhoAreYou::Application.routes.draw do
+  resources :answers
+
+  resources :questions
+
   resources :emotional_words
 
   resources :items

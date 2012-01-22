@@ -19,7 +19,14 @@ class AccountsController < ApplicationController
   # GET /accounts/1.xml
   def show
     @account = Account.find(params[:id])
-
+    questions = Question.all
+    answered_list = @account.answers
+    answered_list.each do |answer|
+      questions.delete(answer.question)
+    end
+    @question = questions.first
+    @answer = Answer.new(:question_id => @question.id) unless @question.blank?
+    @answers = current_account.answers
      respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @account }

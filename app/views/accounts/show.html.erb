@@ -9,7 +9,14 @@
   <% end -%>
 </p>
 
-
+<% unless @msg.nil? %>
+  <% @msg.each do |str| %>
+    <font size="2" color="#00cc99">
+      <%= link_to str, {:controller => 'avatar_twitters', :action => 'show', 
+      :id => @account.avatar.avatar_twitter.id},:style=>"color:green;" %>
+    </font></br>
+  <% end %>
+<% end %>
 <% if @account.avatar.nil? %>
    <%= link_to 'アバターを作成する', new_avatar_path %> <br> 
 <% else %>
@@ -19,6 +26,42 @@
 <% unless @account.twitter.nil? %>
    <%= link_to 'twitter情報を確認する(時間がかかります)', twitter_path(@account.twitter) %> <br> 
 <% end %>
+<br>
+<br>
+
+<% if !@account.avatar.nil? and !@account.avatar.avatar_twitter.nil? and
+   !@question.blank? %>
+  アバターから質問がきています<br>
+  <%= @question.content %>
+  <%= form_for(@answer) do |f| %>
+    <p>
+      <%= f.label '答える' %><br />
+      <%= f.text_field :content %>
+    </p>
+    <%= f.hidden_field :question_id, :value => @answer.question_id %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>
+
+<% unless @answers.empty? %>
+  <table border="1" cellpadding="5"
+  <caption>質問リスト</caption>
+    <tr>
+      <th>質問</th>
+      <th>答え</th>
+    </tr>
+  <% @answers.each do |answer| %>
+    <tr>
+      <td><%= answer.question.content %></td>
+      <td><%= answer.content %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+<br>
+<br>
 
 <%= link_to 'Edit', edit_account_path(@account) %>
 <%= link_to 'index', accounts_path if current_account.is_administrator%> 
