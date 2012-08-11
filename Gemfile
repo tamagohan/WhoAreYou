@@ -1,18 +1,21 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 
-gem 'rake', '0.8.7'
+gem 'rake', '0.9.2.2'
 gem 'oauth'
 gem 'rubytter'
-gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
+gem 'authlogic', :git => 'git@github.com:james2m/authlogic.git', :branch => 'fix-migrations'
+# gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git"
 gem 'heroku'
 gem 'will_paginate'
+gem 'prototype-rails'
+
 
 group :test do
   gem 'test-unit'

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122014202) do
+ActiveRecord::Schema.define(:version => 20120805023230) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login"
@@ -20,27 +21,28 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.integer  "login_count"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "role"
+    t.text     "property"
   end
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
     t.integer  "account_id"
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "avatar_tweets", :force => true do |t|
     t.integer  "avatar_twitter_id"
-    t.decimal  "tw_av_id"
+    t.decimal  "tw_av_id",          :precision => 20, :scale => 0
     t.string   "tw_av_str"
     t.integer  "tw_av_type"
     t.string   "tw_av_image_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "avatar_twitters", :force => true do |t|
@@ -48,9 +50,9 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.string   "auth_id"
     t.string   "auth_password"
     t.string   "twitter_name"
-    t.decimal  "last_cp_tw_id", :default => 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.decimal  "last_cp_tw_id", :precision => 20, :scale => 0, :default => 0
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   create_table "avatars", :force => true do |t|
@@ -59,8 +61,8 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.string   "name"
     t.datetime "birthday"
     t.integer  "sex"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.text     "image_url"
   end
 
@@ -74,8 +76,8 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.string   "reading"
     t.integer  "pos"
     t.decimal  "semantic_orientation", :precision => 10, :scale => 8, :default => 0.0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
   end
 
   add_index "emotional_words", ["word"], :name => "index_emotional_words_on_word"
@@ -84,8 +86,8 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.integer  "avatar_id"
     t.integer  "growth_type"
     t.boolean  "is_informed", :default => false, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "items", :force => true do |t|
@@ -93,26 +95,26 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.integer  "item_type"
     t.text     "description"
     t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "questions", :force => true do |t|
     t.string   "content"
     t.integer  "question_type", :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "tweets", :force => true do |t|
     t.integer  "twitter_id"
-    t.decimal  "tw_id"
+    t.decimal  "tw_id",         :precision => 20, :scale => 0
     t.string   "tw_str"
     t.integer  "tw_type"
     t.string   "tw_image_url"
     t.datetime "tw_created_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.decimal  "emotion",       :precision => 11, :scale => 8, :default => 0.0, :null => false
   end
 
@@ -121,9 +123,9 @@ ActiveRecord::Schema.define(:version => 20120122014202) do
     t.integer  "tweet_id"
     t.string   "oauth_token"
     t.string   "oauth_verifier"
-    t.decimal  "last_tw_id",     :default => 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.decimal  "last_tw_id",     :precision => 20, :scale => 0, :default => 0
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
   end
 
 end

@@ -1,7 +1,7 @@
 <h1>ログイン</h1>
 <p id="notice"><%= notice %></p>
 
-<% form_for @account_session, :url => account_session_path do |f| %>
+<%= form_for @account_session, :url => account_session_path do |f| %>
   <p>
     <%= f.label :login %><br />
     <%= f.text_field :login %>
