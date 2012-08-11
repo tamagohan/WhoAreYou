@@ -1,0 +1,275 @@
+3.0.4と3.2.0の違い
+
+* 新機能
+** Faster Dev Mode
+** EXPLAIN
+** TaggedLogging
+
+* Faster Dev Mode
+** 「Active Reload」に着想を得た機能で、開発時に全コンポーネントをリロードするのではなく、
+    変更のあったクラスのみをリロードすることで、開発速度を大きく改善
+
+** ルーティングエンジン「Journey」(https://github.com/rails/journey)によってリクエストの処理やリンク生成も高速
+> rails --version
+Rails 3.0.7
+> time rake routes
+real	0m7.132s
+user	0m5.583s
+sys	0m0.910s
+
+> rails --version
+Rails 3.2.0
+> time rake routes
+real	0m5.855s
+user	0m4.454s
+sys	0m0.811s
+
+*** rails 3.0.4
+**** 1回目
+Completed 200 OK in 183ms (Views: 16.8ms | ActiveRecord: 0.0ms)
+**** 2回目以降
+Completed 200 OK in 84ms (Views: 16.2ms | ActiveRecord: 0.0ms)
+
+*** rails 3.2
+*** 1回目
+Completed 200 OK in 160ms (Views: 107.8ms | ActiveRecord: 18.1ms)
+*** 2回目以降
+Completed 200 OK in 44ms (Views: 42.7ms | ActiveRecord: 0.0ms)
+
+config/envieroments/development.rbの
+config.reload_classes_only_on_change=false
+とすることで無効化が可能。
+
+
+** 補足
+rake routesの表記法法がかわった
+*** rails 3.0.4
+ answers GET    /answers(.:format)                  {:action=>"index", :controller=>"answers"}
+*** rails 3.2.0
+ answers GET    /answers(.:format)                  answers#index
+MacBookAir(11型)の２画面表示でも折り返しが少なくなったので個人的にとても嬉しい。
+
+* EXPLAIN
+** 参考URL
+http://weblog.rubyonrails.org/2011/12/6/what-s-new-in-edge-rails-explain/
+** 概要
+ARel に生成されたクエリを表示する便利な機能。
+これは ActiveRecord::Relation に実装された explain というメソッドによるもの。
+たとえば、 puts Person.active.limit(5).explain といったコードを実行すると、
+ARel が生成するクエリが表示されます。これによってインデックスが正しいかどうかの確認、さらなるクエリ最適化が可能です。
+0.5 秒以上かかるクエリは development モードでは自動的に表示されます。この閾値は変更可能です。
+** DBのexplain機能
+このコマンドは与えられた問い合わせに対して Postgres のプランナが生成する実行計画を表示します。 
+実行計画は、その問い合わせによって参照される(複数)テーブルが どのようにスキャンされるのか、
+つまり、単純なシーケンシャルス キャンなのか、インデックススキャンなのか等を示します。
+また、 複数テーブルが参照される場合は、各入力テーブルから必要なタプルを合わせて
+取り出す時にどのような結合アルゴリズムが使われる かも示します。 
+
+** 主な機能
+*** 手動によるexplainの実行
+User.where(:id => 1).joins(:posts).explain
+出力としてDBのシェルが出すものに従った出力をする
+=> DB毎の異なったフォーマットで出力される　
+**** postgresの例
+**** sqliteの例
+下記の用にputs _　を使うと出力結果を見やすく整形することができます。
+> puts _
+
+*** 遅いqueryに対する自動explainの実行
+config/environments/development.rbに
+config.active_record.auto_explain_threshold_in_seconds = 0.5
+と記述することで0.5秒以上かかったqueryに対してそのqueryが自動でログに出される(warnが使われる)
+config.active_record.auto_explain_threshold_in_secondsが設定されていない(nil)ならば、
+自動explain機能は使われない
+※production,test環境では使われない
+  - production.rb ではコメントアウト
+  - test.rb には記述なし
+
+*** 自動explain機能の無効化
+0.5秒以上かかるqueryは全てexplain機能が実行されてしまう。しかし、遅いqueryは既に分かったいて
+改めてexplainを実行したくない場合は,そのクエリを以下のようにsilence_auto_explainブロックで
+ラップすることで、explain機能を無効化できる
+> ActiveRecord::Base.silence_auto_explain { Product.order(:name) }
+
+* TaggedLogging
+** 概要
+複数ユーザー、複数アカウントのアプリケーションを動かしている時、
+「誰がやったか」によってログをフィルタリングできると、とても便利です。 
+ActiveSupport の TaggedLogging はサブドメイン、リクエスト ID 等々を
+ログにスタンプすることでそれを実現し、この手のアプリのデバッグをしやすくしました。
+** 使い方
+/config/environments/development.rb
+下記のようにログに１uuidとremote_ipをタグづける
+config.log_tags = [:uuid, :remote_ip]
+uuid : ユニークなリクエストid
+      ログがどのリクエストからのものであるかを特定が可能。
+remote_ip : リモートIPアドレス
+
+[ab939dfca5d57843ea4c695cab6f721d] [127.0.0.1] Processing by ProductsController#index as HTML
+[ab939dfca5d57843ea4c695cab6f721d] [127.0.0.1]   Product Load (0.3ms)  SELECT "products".* FROM "products" 
+[ab939dfca5d57843ea4c695cab6f721d] [127.0.0.1]   Rendered products/index.html.erb within layouts/application (22.0ms)
+[ab939dfca5d57843ea4c695cab6f721d] [127.0.0.1] Completed 200 OK in 81ms (Views: 73.1ms | ActiveRecord: 0.3ms)
+[98eec5f8976586c1165b981797086b6a] [127.0.0.1] 
+
+** 詳細
+ActiveSupport:TaggedLoggingがstandard Logger classをラップすることにより、
+taggingの性能を拡張した。
+> Logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+ 
+> Logger.tagged("BCX") { Logger.info "Stuff" }
+# Logs "[BCX] Stuff"
+ 
+> Logger.tagged("BCX", "Jason") { Logger.info "Stuff" }
+# Logs "[BCX] [Jason] Stuff"
+ 
+> Logger.tagged("BCX") { Logger.tagged("Jason") { Logger.info "Stuff" } }
+# Logs "[BCX] [Jason] Stuff"
+
+
+
+
+* 細かい点
+** Key-Valueストア (ActiveRecord)
+text のカラムを用意して、そこにハッシュ型のデータを保存できる
+** ハッシュ型のデータを格納するユースケース(Plaza)
+*** ユーザは複数の写真集(UserTag)をもつ
+*** 写真集は色や表紙のなど個別のstyleをもつ
+
+styleのカラムに写真集のレイアウト情報をハッシュ形式で格納
+> UserTag.last.style
+
+** 今までの使い方
+*** 読み込み
+styleカラムをJSONでパースする
+def get_property(key)
+  obj = JSON.parse(self.property)
+  return obj[key.to_s]
+end
+
+*** 書き込み
+styleカラムをJSONでパースし、ハッシュ形式に変換、ハッシュを編集する。
+編集したハッシュをJSON形式に変換して更新
+def set_property(key, value)
+  obj = (self.property && JSON.parse(self.property)) || {}
+  obj[key.to_s] = value
+  self.property = obj.to_json
+  self.save!
+end
+
+*** 下記のように記述できる
+class Account < ActiveRecord::Base
+  store :property, accessors: [:name, :val]
+end
+
+act = Account.new(val: 'test')
+ => #<Account id: nil, login: nil, crypted_password: nil, password_salt: nil, persistence_token: nil, login_count: nil, current_login_at: nil, last_login_at: nil, created_at: nil, updated_at: nil, role: nil, property: {:val=>"test"}> 
+
+*** validationが使える
+  validates :name, presence: true, length: { maximum: 10 }
+  validates :val, numericality: true
+
+* 不正な値
+ruby-1.9.2-p290 :011 > act.val = "test"
+ => "test" 
+ruby-1.9.2-p290 :012 > act.valid?
+ => false 
+ruby-1.9.2-p290 :014 > act.errors.full_messages
+ => ["Name can't be blank", "Val is not a number"] 
+
+* 正しい値
+act.name = "test"
+ => "test" 
+ruby-1.9.2-p290 :020 > act.val = 3
+ => 3 
+ruby-1.9.2-p290 :021 > act.valid?
+ => true 
+ruby-1.9.2-p290 :022 > act.save!
+ruby-1.9.2-p290 :026 >   act.reload.property
+ => {:val=>3, :name=>"test"}
+
+** 使い道
+*** カラムとして個別に用意するのが少しためらわれる、データ数が可変な、設定のようなものを保存する(それが複数チェックボックスを含むとか)
+*** データはハッシュとして参照・保存するが、中身のデータそのものを検索したりはしない
+
+* Time関連
+** 下記のメソッドの追加
+Time#all_day,
+Time#all_week,
+Time#all_quarter
+Time#all_year
+
+業務アプリなどで、「終日」や「今週いっぱい」などの condition で find する際、23:59:59 とか面倒な事をしなくて済みます。
+ruby-1.9.2-p290 :027 > Time.now.all_day
+ => 2012-08-05 00:00:00 +0900..2012-08-05 23:59:59 +0900 
+ruby-1.9.2-p290 :028 > Time.now.all_day.class
+ => Range 
+
+
+* モジュール化された関連メソッド (ActiveRecord)
+
+blog has_many entries
+entry belongs_to blog
+
+なモデルがあった時に、今までは Entry#blog や Entry#blog= などの関連のメソッドは、Entryモデルに直接付けられていた。
+Rails 3.2 からは、これらの関連系メソッドは
+(モデルクラス名)::GeneratedFeatureMethods
+という名前のモジュールに動的に付けられ、このモジュールがモデルに include される形になりました。
+
+
+下記のように確認してみると、確かにモジュールが include されているようです。
+Twitter.ancestors[0,2]
+ => [Twitter(id: integer, account_id: integer, tweet_id: integer, oauth_token: string, oauth_verifier: string, last_tw_id: integer, created_at: datetime, updated_at: datetime), Twitter::GeneratedFeatureMethods]
+
+ruby-1.9.3-head :001 > Entry.ancestors[0,2]
+ => [Entry(id: integer, title: string, created_at: datetime, updated_at: datetime), Entry::GeneratedFeatureMethods] 
+
+
+何が嬉しいかというと関連のメソッドをオーバーライドする際、
+今まではモデルにメソッドが直接付いている為に、alias_method_chain などを使うしか無かったのが、
+普通にオーバーライドして、必要であれば super 呼ぶだけで良くなったという事です。
+
+# 上記サイトより引用
+class Car < ActiveRecord::Base
+  belongs_to :owner
+  belongs_to :old_owner
+
+  def owner=(new_owner)
+    self.old_owner = self.owner
+    super
+  end
+end
+
+//avatarを取得
+ruby-1.9.2-p290 :014 >   a = Avatar.last
+q=> #<Avatar id: 1, account_id: 2, avatar_tweet_id: nil, name: "masaki-clone", birthday: "2012-08-05 01:28:03", sex: 0, created_at: "2012-08-05 01:28:03", updated_at: "2012-08-05 01:28:34", image_url: "/images/avatar2.jpg"> 
+
+//所持アイテムを確認
+ruby-1.9.2-p290 :015 > a.items
+ => [] 
+
+//アイテムを取得
+ruby-1.9.2-p290 :016 > i = Item.last
+=> #<Item id: 1, name: "twitter読本", item_type: 1, description: "<b>アバターとtwitter</b></br>\n</br>\ntwitter情報をアバターにダウンロー...", image: "/images/twitter_primer.jpg", created_at: "2012-08-05 01:25:25", updated_at: "2012-08-05 01:25:25"> 
+
+//アイテムをアバターに渡す
+ruby-1.9.2-p290 :017 > a.store_item(i)
+ => true 
+
+//所持アイテムを確認
+ruby-1.9.2-p290 :018 > a.items
+ => [#<Relation::AvatarItem id: 2, avatar_id: 1, item_id: 1, quantity: 1, created_at: "2012-08-11 06:02:32", updated_at: "2012-08-11 06:02:32">] 
+
+//アイテムをアバターに渡す
+ruby-1.9.2-p290 :019 > a.store_item(i)
+ => true 
+
+//所持アイテムを確認
+ruby-1.9.2-p290 :020 > a.items
+ => [#<Relation::AvatarItem id: 2, avatar_id: 1, item_id: 1, quantity: 2, created_at: "2012-08-11 06:02:32", updated_at: "2012-08-11 06:02:48">] 
+
+
+
+
+
+* もっと細かいこと
+** rake db:dropでテスト用環境もドロップできるように
