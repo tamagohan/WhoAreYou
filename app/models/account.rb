@@ -5,8 +5,8 @@ class Account < ActiveRecord::Base
 
   store :property, accessors: [:name, :val]
 
-  validates :name, presence: true, length: { maximum: 10 }
-  validates :val, numericality: true
+  validates :name, length: { maximum: 10 }
+  validates :val, numericality: true, unless: 'val.nil?'
 
   ADMIN_ROLE = 0
   acts_as_authentic do |c|
