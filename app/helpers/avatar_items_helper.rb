@@ -1,0 +1,2 @@
+module AvatarItemsHelper
+end

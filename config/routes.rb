@@ -1,4 +1,6 @@
 WhoAreYou::Application.routes.draw do
+  resources :avatar_items
+
   resources :answers
 
   resources :questions

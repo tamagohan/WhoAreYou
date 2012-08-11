@@ -1,0 +1,27 @@
+<h1>Listing avatar_items</h1>
+
+<table>
+  <tr>
+    <th>Avatar</th>
+    <th>Item</th>
+    <th>Quanity</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @avatar_items.each do |avatar_item| %>
+  <tr>
+    <td><%= avatar_item.avatar_id %></td>
+    <td><%= avatar_item.item_id %></td>
+    <td><%= avatar_item.quanity %></td>
+    <td><%= link_to 'Show', avatar_item %></td>
+    <td><%= link_to 'Edit', edit_avatar_item_path(avatar_item) %></td>
+    <td><%= link_to 'Destroy', avatar_item, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Avatar item', new_avatar_item_path %>

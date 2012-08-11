@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Avatar:</b>
+  <%= @avatar_item.avatar_id %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%= @avatar_item.item_id %>
+</p>
+
+<p>
+  <b>Quanity:</b>
+  <%= @avatar_item.quanity %>
+</p>
+
+
+<%= link_to 'Edit', edit_avatar_item_path(@avatar_item) %> |
+<%= link_to 'Back', avatar_items_path %>

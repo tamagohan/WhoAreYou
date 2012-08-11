@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  avatar_id: 1
+  item_id: 1
+  quanity: 1
+
+two:
+  avatar_id: 1
+  item_id: 1
+  quanity: 1
